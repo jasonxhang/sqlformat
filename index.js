@@ -17,13 +17,24 @@ if (argv) {
     let reg = new RegExp(`\\b${word}`, 'g')
 
     if (word === 'ON'){     
-      string = string.replace(reg, word.green)    
+      string = string.replace(reg, word.cyan)    
     } else if (word === 'SELECT') {
       string = string.replace(reg, word.inverse.yellow)    
     } else {
       string = string.replace(reg, word.blue)
     } 
   }
+
+  string = string
+    .replace(/\"\d{4}-\d{2}-\d{2} \d{2}\:\d{2}\:\d{2}\"/g, function(m){
+        return m.green
+    })
+    .replace(/\"subaction_\d*\"/g, function (m){
+        return m.green
+    })
+    .replace(/\[(triggeredmail\.[^\]]+)\]/g, function(m){
+        return m.red
+    })
 
   console.log('\n' + 'Formatted SQL here:'.cyan + '\n\n' + string + '\n\n'+ 'END'.red.italic)
 } 
